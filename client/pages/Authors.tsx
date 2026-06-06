@@ -4,6 +4,7 @@ import { Search, Filter } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import AuthorCard from "@/components/AuthorCard";
 import type { Author } from "@shared/api";
+import { listAuthors } from "@shared/catalog";
 
 export default function Authors() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -22,12 +23,9 @@ export default function Authors() {
     if (nationalityFilter) params.set("nationality", nationalityFilter);
 
     setLoading(true);
-    fetch(`/api/authors?${params}`)
-      .then((r) => r.json())
-      .then((data) => {
-        setAuthors(data.authors);
-        setLoading(false);
-      });
+    const query = Object.fromEntries(params.entries());
+    setAuthors(listAuthors(query).authors);
+    setLoading(false);
   }, [search, genreFilter, nationalityFilter]);
 
   const handleSearch = (e: React.FormEvent) => {

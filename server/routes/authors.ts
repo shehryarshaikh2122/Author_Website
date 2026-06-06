@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { getAuthorById as findAuthor, listAuthors } from "../lib/authors";
+import { getAuthorById as findAuthor, listAuthors } from "../../shared/catalog";
 
 export const getAuthors = (req: Request, res: Response): void => {
   res.json(listAuthors(req.query as Record<string, string | string[] | undefined>));

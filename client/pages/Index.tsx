@@ -6,6 +6,7 @@ import AuthorCard from "@/components/AuthorCard";
 import BookCard from "@/components/BookCard";
 import SectionHeader from "@/components/SectionHeader";
 import type { Author, Book, Category } from "@shared/api";
+import { listAuthors, listBooks, listCategories } from "@shared/catalog";
 
 export default function Index() {
   const [featuredAuthors, setFeaturedAuthors] = useState<Author[]>([]);
@@ -15,19 +16,11 @@ export default function Index() {
   const [latestAuthors, setLatestAuthors] = useState<Author[]>([]);
 
   useEffect(() => {
-    Promise.all([
-      fetch("/api/authors?featured=true").then((r) => r.json()),
-      fetch("/api/books?featured=true").then((r) => r.json()),
-      fetch("/api/books?trending=true").then((r) => r.json()),
-      fetch("/api/categories").then((r) => r.json()),
-      fetch("/api/authors").then((r) => r.json()),
-    ]).then(([authorsRes, booksRes, trendingRes, catRes, allAuthorsRes]) => {
-      setFeaturedAuthors(authorsRes.authors);
-      setFeaturedBooks(booksRes.books);
-      setTrendingBooks(trendingRes.books);
-      setCategories(catRes.categories);
-      setLatestAuthors(allAuthorsRes.authors.slice(-4).reverse());
-    });
+    setFeaturedAuthors(listAuthors({ featured: "true" }).authors);
+    setFeaturedBooks(listBooks({ featured: "true" }).books);
+    setTrendingBooks(listBooks({ trending: "true" }).books);
+    setCategories(listCategories().categories);
+    setLatestAuthors(listAuthors().authors.slice(-4).reverse());
   }, []);
 
   return (

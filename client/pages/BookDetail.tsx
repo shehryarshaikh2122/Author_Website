@@ -5,6 +5,7 @@ import Layout from "@/components/layout/Layout";
 import BookCard from "@/components/BookCard";
 import StarRating from "@/components/StarRating";
 import type { Book, Author, Review } from "@shared/api";
+import { getBookById } from "@shared/catalog";
 import { formatPrice, formatDate } from "@/lib/utils";
 import { useCart } from "@/context/CartContext";
 
@@ -19,16 +20,14 @@ export default function BookDetail() {
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
-    fetch(`/api/books/${id}`)
-      .then((r) => r.json())
-      .then((data) => {
-        setBook(data.book);
-        setAuthor(data.author);
-        setRelatedBooks(data.relatedBooks);
-        setReviews(data.reviews);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+    const result = getBookById(parseInt(id || "0"));
+    if (result) {
+      setBook(result.book);
+      setAuthor(result.author);
+      setRelatedBooks(result.relatedBooks);
+      setReviews(result.reviews);
+    }
+    setLoading(false);
   }, [id]);
 
   const handleAddToCart = () => {

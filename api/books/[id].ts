@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getBookById } from "../../server/lib/books";
+import { getBookById } from "../../shared/catalog";
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   const id = parseInt(String(Array.isArray(req.query.id) ? req.query.id[0] : req.query.id));

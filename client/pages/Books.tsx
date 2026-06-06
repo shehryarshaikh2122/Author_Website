@@ -4,6 +4,7 @@ import { Search, Filter } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import BookCard from "@/components/BookCard";
 import type { Book } from "@shared/api";
+import { listBooks } from "@shared/catalog";
 
 export default function Books() {
   const [searchParams] = useSearchParams();
@@ -18,12 +19,9 @@ export default function Books() {
     if (genreFilter) params.set("genre", genreFilter);
 
     setLoading(true);
-    fetch(`/api/books?${params}`)
-      .then((r) => r.json())
-      .then((data) => {
-        setBooks(data.books);
-        setLoading(false);
-      });
+    const query = Object.fromEntries(params.entries());
+    setBooks(listBooks(query).books);
+    setLoading(false);
   }, [searchParams, search, genreFilter]);
 
   const handleSearch = (e: React.FormEvent) => {

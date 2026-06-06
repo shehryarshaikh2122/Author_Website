@@ -5,6 +5,7 @@ import Layout from "@/components/layout/Layout";
 import BookCard from "@/components/BookCard";
 import StarRating from "@/components/StarRating";
 import type { Author, Book } from "@shared/api";
+import { getAuthorById } from "@shared/catalog";
 import { formatDate } from "@/lib/utils";
 
 export default function AuthorDetail() {
@@ -14,14 +15,12 @@ export default function AuthorDetail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/api/authors/${id}`)
-      .then((r) => r.json())
-      .then((data) => {
-        setAuthor(data.author);
-        setBooks(data.books);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+    const result = getAuthorById(parseInt(id || "0"));
+    if (result) {
+      setAuthor(result.author);
+      setBooks(result.books);
+    }
+    setLoading(false);
   }, [id]);
 
   if (loading) {

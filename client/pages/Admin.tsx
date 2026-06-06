@@ -7,6 +7,7 @@ import {
 import Layout from "@/components/layout/Layout";
 import { useAuth } from "@/context/AuthContext";
 import type { Author, Book, Category } from "@shared/api";
+import { listAuthors, listBooks, listCategories } from "@shared/catalog";
 import { formatPrice } from "@/lib/utils";
 
 export default function Admin() {
@@ -18,15 +19,9 @@ export default function Admin() {
 
   useEffect(() => {
     if (isAdmin) {
-      Promise.all([
-        fetch("/api/authors").then((r) => r.json()),
-        fetch("/api/books").then((r) => r.json()),
-        fetch("/api/categories").then((r) => r.json()),
-      ]).then(([a, b, c]) => {
-        setAuthors(a.authors);
-        setBooks(b.books);
-        setCategories(c.categories);
-      });
+      setAuthors(listAuthors().authors);
+      setBooks(listBooks().books);
+      setCategories(listCategories().categories);
     }
   }, [isAdmin]);
 

@@ -1,14 +1,65 @@
-import { authors, books, reviews } from "../data/mockData";
-import type { BookDetailResponse, BooksResponse } from "../../shared/api";
+import { authors, books, categories, reviews } from "./mockData";
+import type {
+  AuthorDetailResponse,
+  AuthorsResponse,
+  BookDetailResponse,
+  BooksResponse,
+  CategoriesResponse,
+} from "./api";
 
 type QueryValue = string | string[] | undefined;
+type QueryParams = Record<string, QueryValue>;
 
 function queryString(value: QueryValue): string {
   if (Array.isArray(value)) return value[0] ?? "";
   return value ?? "";
 }
 
-export function listBooks(query: Record<string, QueryValue>): BooksResponse {
+export function listAuthors(query: QueryParams = {}): AuthorsResponse {
+  const search = queryString(query.search).toLowerCase();
+  const genre = queryString(query.genre).toLowerCase();
+  const nationality = queryString(query.nationality).toLowerCase();
+  const featured = query.featured === "true";
+
+  let filtered = [...authors];
+
+  if (search) {
+    filtered = filtered.filter(
+      (author) =>
+        author.name.toLowerCase().includes(search) ||
+        author.biography.toLowerCase().includes(search) ||
+        author.genres.some((g) => g.toLowerCase().includes(search)),
+    );
+  }
+  if (genre) {
+    filtered = filtered.filter((author) =>
+      author.genres.some((g) => g.toLowerCase().includes(genre)),
+    );
+  }
+  if (nationality) {
+    filtered = filtered.filter((author) =>
+      author.nationality.toLowerCase().includes(nationality),
+    );
+  }
+  if (featured) {
+    filtered = filtered.filter((author) => author.featured);
+  }
+
+  return { authors: filtered, total: filtered.length };
+}
+
+export function getAuthorById(id: number): AuthorDetailResponse | null {
+  const author = authors.find((entry) => entry.id === id);
+  if (!author) return null;
+
+  return {
+    author,
+    books: books.filter((book) => book.authorId === id),
+    reviews: [],
+  };
+}
+
+export function listBooks(query: QueryParams = {}): BooksResponse {
   const search = queryString(query.search).toLowerCase();
   const genre = queryString(query.genre).toLowerCase();
   const authorId = query.authorId ? parseInt(queryString(query.authorId)) : null;
@@ -60,4 +111,8 @@ export function getBookById(id: number): BookDetailResponse | null {
       .slice(0, 4),
     reviews: reviews.filter((review) => review.bookId === id),
   };
+}
+
+export function listCategories(): CategoriesResponse {
+  return { categories };
 }

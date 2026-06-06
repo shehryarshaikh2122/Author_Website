@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { getBookById as findBook, listBooks } from "../lib/books";
+import { getBookById as findBook, listBooks } from "../../shared/catalog";
 
 export const getBooks = (req: Request, res: Response): void => {
   res.json(listBooks(req.query as Record<string, string | string[] | undefined>));
