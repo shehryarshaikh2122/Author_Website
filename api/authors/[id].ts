@@ -1,7 +1,13 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { createParamHandler } from "../../server/vercelAdapter";
-import { getAuthorById } from "../../server/routes/authors";
+import { getAuthorById } from "../../server/lib/authors";
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
-  return createParamHandler(getAuthorById, "id", req.query)(req, res);
+  const id = parseInt(String(Array.isArray(req.query.id) ? req.query.id[0] : req.query.id));
+  const result = getAuthorById(id);
+
+  if (!result) {
+    return res.status(404).json({ error: "Author not found" });
+  }
+
+  return res.status(200).json(result);
 }

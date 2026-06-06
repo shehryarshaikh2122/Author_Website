@@ -1,4 +1,6 @@
-import { createHandler } from "../server/vercelAdapter";
-import { getBooks } from "../server/routes/books";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { listBooks } from "../server/lib/books";
 
-export default createHandler(getBooks);
+export default function handler(req: VercelRequest, res: VercelResponse) {
+  return res.status(200).json(listBooks(req.query));
+}

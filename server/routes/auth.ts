@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import type { AuthResponse, LoginRequest, RegisterRequest } from "@shared/api";
+import type { AuthResponse, LoginRequest, RegisterRequest } from "../../shared/api";
 
 const demoUsers = [
   { id: 1, name: "Demo User", email: "user@demo.com", password: "demo123", role: "user" as const },

@@ -1,6 +1,11 @@
 {
   "buildCommand": "pnpm run build:vercel",
   "outputDirectory": "dist/client",
+  "functions": {
+    "api/**/*.ts": {
+      "includeFiles": "server/**"
+    }
+  },
   "rewrites": [
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]

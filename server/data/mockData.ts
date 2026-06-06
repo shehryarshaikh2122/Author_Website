@@ -1,4 +1,4 @@
-import type { Author, Book, Category, Review } from "@shared/api";
+import type { Author, Book, Category, Review } from "../../shared/api";
 
 export const categories: Category[] = [
   { id: 1, name: "Fiction", slug: "fiction" },

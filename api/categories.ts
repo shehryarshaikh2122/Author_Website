@@ -1,4 +1,6 @@
-import { createHandler } from "../server/vercelAdapter";
-import { getCategories } from "../server/routes/categories";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { listCategories } from "../server/lib/categories";
 
-export default createHandler(getCategories);
+export default function handler(_req: VercelRequest, res: VercelResponse) {
+  return res.status(200).json(listCategories());
+}

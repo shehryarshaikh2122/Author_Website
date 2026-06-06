@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import type { CheckoutRequest, CheckoutResponse } from "@shared/api";
+import type { CheckoutRequest, CheckoutResponse } from "../../shared/api";
 
 let orderCounter = 1000;
 
