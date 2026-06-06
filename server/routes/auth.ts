@@ -1,4 +1,4 @@
-import { RequestHandler } from "express";
+import type { Request, Response } from "express";
 import type { AuthResponse, LoginRequest, RegisterRequest } from "@shared/api";
 
 const demoUsers = [
@@ -6,7 +6,7 @@ const demoUsers = [
   { id: 2, name: "Admin", email: "admin@demo.com", password: "admin123", role: "admin" as const },
 ];
 
-export const login: RequestHandler = (req, res) => {
+export const login = (req: Request, res: Response): void => {
   const { email, password } = req.body as LoginRequest;
   const user = demoUsers.find((u) => u.email === email && u.password === password);
 
@@ -24,7 +24,7 @@ export const login: RequestHandler = (req, res) => {
   res.json(response);
 };
 
-export const register: RequestHandler = (req, res) => {
+export const register = (req: Request, res: Response): void => {
   const { name, email } = req.body as RegisterRequest;
 
   if (!name || !email) {

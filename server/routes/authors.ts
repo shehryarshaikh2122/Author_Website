@@ -1,8 +1,8 @@
-import { RequestHandler } from "express";
+import type { Request, Response } from "express";
 import { authors, books } from "../data/mockData";
 import type { AuthorDetailResponse, AuthorsResponse } from "@shared/api";
 
-export const getAuthors: RequestHandler = (req, res) => {
+export const getAuthors = (req: Request, res: Response): void => {
   const search = (req.query.search as string)?.toLowerCase() || "";
   const genre = (req.query.genre as string)?.toLowerCase() || "";
   const nationality = (req.query.nationality as string)?.toLowerCase() || "";
@@ -36,7 +36,7 @@ export const getAuthors: RequestHandler = (req, res) => {
   res.json(response);
 };
 
-export const getAuthorById: RequestHandler = (req, res) => {
+export const getAuthorById = (req: Request, res: Response): void => {
   const id = parseInt(String(req.params.id));
   const author = authors.find((a) => a.id === id);
 

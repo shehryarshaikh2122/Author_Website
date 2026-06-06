@@ -1,9 +1,9 @@
-import { RequestHandler } from "express";
+import type { Request, Response } from "express";
 import type { CheckoutRequest, CheckoutResponse } from "@shared/api";
 
 let orderCounter = 1000;
 
-export const checkout: RequestHandler = (req, res) => {
+export const checkout = (req: Request, res: Response): void => {
   const body = req.body as CheckoutRequest;
 
   if (!body.items?.length || !body.customerInfo?.email) {
