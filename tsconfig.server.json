@@ -7,5 +7,5 @@
     "noEmit": false,
     "allowImportingTsExtensions": false
   },
-  "include": ["server", "shared", "api"]
+  "include": ["server", "shared", "api-src"]
 }
