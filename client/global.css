@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 36 33% 95%;
+    --foreground: 24 30% 12%;
+    --card: 36 40% 97%;
+    --card-foreground: 24 30% 12%;
+    --primary: 345 42% 30%;
+    --primary-foreground: 36 33% 95%;
+    --secondary: 36 25% 88%;
+    --secondary-foreground: 24 30% 20%;
+    --muted: 36 20% 90%;
+    --muted-foreground: 24 15% 45%;
+    --accent: 43 70% 47%;
+    --accent-foreground: 24 30% 12%;
+    --border: 36 20% 85%;
+    --input: 36 20% 85%;
+    --ring: 345 42% 30%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 24 30% 8%;
+    --foreground: 36 33% 92%;
+    --card: 24 25% 12%;
+    --card-foreground: 36 33% 92%;
+    --primary: 345 50% 55%;
+    --primary-foreground: 24 30% 8%;
+    --secondary: 24 20% 18%;
+    --secondary-foreground: 36 33% 85%;
+    --muted: 24 20% 18%;
+    --muted-foreground: 36 15% 60%;
+    --accent: 43 70% 50%;
+    --accent-foreground: 24 30% 8%;
+    --border: 24 20% 22%;
+    --input: 24 20% 22%;
+    --ring: 345 50% 55%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground shadow-literary transition-all hover:bg-literary-wine hover:shadow-literary-lg active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border-2 border-primary bg-transparent px-6 py-2.5 text-sm font-semibold text-primary transition-all hover:bg-primary hover:text-primary-foreground active:scale-[0.98];
+  }
+
+  .btn-accent {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-literary-gold px-6 py-2.5 text-sm font-semibold text-literary-ink shadow-literary transition-all hover:brightness-110 active:scale-[0.98];
+  }
+
+  .card-literary {
+    @apply rounded-lg border border-border bg-card p-6 shadow-literary transition-all hover:shadow-literary-lg;
+  }
+
+  .section-title {
+    @apply font-serif text-3xl font-bold text-foreground md:text-4xl;
+  }
+
+  .section-subtitle {
+    @apply mt-2 text-lg text-muted-foreground;
+  }
+
+  .input-field {
+    @apply w-full rounded-md border border-input bg-background px-4 py-2.5 text-sm outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20;
+  }
+
+  .page-container {
+    @apply mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8;
+  }
+
+  .hero-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--background)) 0%,
+      hsl(36 30% 90%) 50%,
+      hsl(345 30% 92%) 100%
+    );
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-literary-burgundy to-literary-gold bg-clip-text text-transparent;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
